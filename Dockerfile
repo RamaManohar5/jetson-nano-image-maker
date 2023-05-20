@@ -6,6 +6,11 @@ RUN apt install -y ca-certificates
 RUN apt install -y sudo
 RUN apt install -y ssh
 RUN apt install -y netplan.io
+RUN apt install nano
+
+# Install WLAN packages
+RUN apt install -y wireless-tools
+RUN apt install -y wpasupplicant
 
 # resizerootfs
 RUN apt install -y udev
@@ -30,7 +35,7 @@ RUN touch /opt/nvidia/l4t-packages/.nv-l4t-disable-boot-fw-update-in-preinstall
 
 COPY root/etc/apt/ /etc/apt
 COPY root/usr/share/keyrings /usr/share/keyrings
-RUN apt update
+#RUN apt update
 
 # nv-l4t-usb-device-mode
 RUN apt install -y bridge-utils
