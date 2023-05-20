@@ -9,6 +9,9 @@ RUN apt install -y netplan.io
 RUN apt install -y python3.8
 RUN apt install -y virtualenv
 
+# install low resource gui
+RUN apt-get install lxqt
+
 
 # resizerootfs
 RUN apt install -y udev
