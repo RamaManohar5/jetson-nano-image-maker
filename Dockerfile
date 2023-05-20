@@ -10,7 +10,7 @@ RUN apt install -y python3.8
 RUN apt install -y virtualenv
 
 # install low resource gui
-RUN apt-get install lxqt
+RUN apt install -y lxde lxterminal
 
 
 # resizerootfs
