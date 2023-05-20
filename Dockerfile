@@ -6,6 +6,9 @@ RUN apt install -y ca-certificates
 RUN apt install -y sudo
 RUN apt install -y ssh
 RUN apt install -y netplan.io
+RUN apt install -y python3.8
+RUN apt install -y virtualenv
+
 
 # resizerootfs
 RUN apt install -y udev
@@ -54,7 +57,7 @@ RUN rm -rf /opt/nvidia/l4t-packages
 
 COPY root/ /
 
-RUN useradd -ms /bin/bash jetson
-RUN echo 'jetson:jetson' | chpasswd
+RUN useradd -ms /bin/bash nano
+RUN echo 'nano:1234' | chpasswd
 
-RUN usermod -a -G sudo jetson
+RUN usermod -a -G sudo nano
