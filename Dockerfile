@@ -1,4 +1,4 @@
-FROM ubuntu:20.04 as base
+FROM ubuntu:22.04 as base
 
 RUN apt update
 RUN apt install -y ca-certificates
@@ -6,12 +6,6 @@ RUN apt install -y ca-certificates
 RUN apt install -y sudo
 RUN apt install -y ssh
 RUN apt install -y netplan.io
-RUN apt install -y python3.8
-RUN apt install -y virtualenv
-
-# install low resource gui
-RUN apt install -y lxde lxterminal
-
 
 # resizerootfs
 RUN apt install -y udev
@@ -60,7 +54,7 @@ RUN rm -rf /opt/nvidia/l4t-packages
 
 COPY root/ /
 
-RUN useradd -ms /bin/bash nano
-RUN echo 'nano:1234' | chpasswd
+RUN useradd -ms /bin/bash jetson
+RUN echo 'jetson:jetson' | chpasswd
 
-RUN usermod -a -G sudo nano
+RUN usermod -a -G sudo jetson
