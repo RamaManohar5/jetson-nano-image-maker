@@ -63,7 +63,7 @@ RUN rm -rf /opt/nvidia/l4t-packages
 COPY root/ /
 
 # Create a user and set the password
-RUN useradd -ms /bin/bash jetson
+RUN useradd -ms /bin/bash nano
 RUN echo 'nano:1234' | chpasswd
 
 RUN usermod -a -G sudo nano
