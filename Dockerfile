@@ -1,4 +1,7 @@
-FROM ubuntu:22.04 as base
+FROM ubuntu:20.04 as base
+
+# Set DEBIAN_FRONTEND to noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt update
 RUN apt install -y ca-certificates
@@ -6,21 +9,21 @@ RUN apt install -y ca-certificates
 RUN apt install -y sudo
 RUN apt install -y ssh
 RUN apt install -y netplan.io
-RUN apt install nano
+RUN apt install -y nano
 
 # Install WLAN packages
 RUN apt install -y wireless-tools
 RUN apt install -y wpasupplicant
 
-# resizerootfs
-RUN apt install -y udev
-RUN apt install -y parted
+# Install basic networking tools
+RUN apt install -y iputils-ping
+RUN apt install -y dnsutils
 
-# ifconfig
-RUN apt install -y net-tools
+# Install basic text editor
+RUN apt install -y vim
 
-# needed by knod-static-nodes to create a list of static device nodes
-RUN apt install -y kmod
+# Install GUI (XFCE)
+RUN apt install -y xfce4
 
 # Install our resizerootfs service
 COPY root/etc/systemd/ /etc/systemd
@@ -35,12 +38,12 @@ RUN touch /opt/nvidia/l4t-packages/.nv-l4t-disable-boot-fw-update-in-preinstall
 
 COPY root/etc/apt/ /etc/apt
 COPY root/usr/share/keyrings /usr/share/keyrings
-#RUN apt update
+RUN apt update
 
 # nv-l4t-usb-device-mode
 RUN apt install -y bridge-utils
 
-# https://docs.nvidia.com/jetson/l4t/index.html#page/Tegra%20Linux%20Driver%20Package%20Development%20Guide/updating_jetson_and_host.html
+# Install NVIDIA Jetson packages
 RUN apt install -y -o Dpkg::Options::="--force-overwrite" \
     nvidia-l4t-core \
     nvidia-l4t-init \
@@ -59,7 +62,8 @@ RUN rm -rf /opt/nvidia/l4t-packages
 
 COPY root/ /
 
+# Create a user and set the password
 RUN useradd -ms /bin/bash jetson
-RUN echo 'jetson:jetson' | chpasswd
+RUN echo 'nano:1234' | chpasswd
 
-RUN usermod -a -G sudo jetson
+RUN usermod -a -G sudo nano
